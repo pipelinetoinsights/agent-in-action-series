@@ -9,8 +9,8 @@ Each folder maps to one post. Start from Part 2 (Part 1 is concepts only, no cod
 | Part | Topic | Post | Code |
 |------|-------|------|------|
 | 1 | What Is an AI Agent? | [Read](https://pipeline2insights.substack.com/p/agents-in-action-1-what-is-an-ai-for-data-engineers) | — no code — |
-| 2 | Your First Tool — Function Calling | [Read](https://pipeline2insights.substack.com/p/agents-in-action-2) | [part-02-function-calling](./part-02-function-calling/) |
-| 3 | MCP | coming soon | — |
+| 2 | Your First Tool — Function Calling | [Read](https://pipeline2insights.substack.com/p/agents-in-action-2-building-your-first-tool) | [part-02-function-calling](./part-02-function-calling/) |
+| 3 | MCP — Model Context Protocol | [Read](https://pipeline2insights.substack.com) | [part-03-mcp](./part-03-mcp/) |
 | 4 | Skills | coming soon | — |
 | 5 | Sub-Agents | coming soon | — |
 | 6 | Memory | coming soon | — |
@@ -20,7 +20,8 @@ Each folder maps to one post. Start from Part 2 (Part 1 is concepts only, no cod
 ## Requirements
 
 ```bash
-pip install anthropic
+pip install anthropic   # Parts 1–2
+pip install fastmcp     # Part 3+
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 

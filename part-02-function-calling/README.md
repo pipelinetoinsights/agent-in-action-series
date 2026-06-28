@@ -1,6 +1,6 @@
 # Part 2: Your First Tool — Function Calling with the Claude API
 
-Code for [Agents in Action #2](https://pipeline2insights.substack.com/p/agents-in-action-2) on Pipeline to Insights.
+Code for [Agents in Action #2](https://pipeline2insights.substack.com/p/agents-in-action-2-building-your-first-tool) on Pipeline to Insights.
 
 ## What this covers
 
