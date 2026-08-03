@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .DS_Store
 .env
+agent_memory.json
+agent_memory.tmp
+*.db

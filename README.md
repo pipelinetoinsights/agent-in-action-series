@@ -13,7 +13,7 @@ Each folder maps to one post. Start from Part 2 (Part 1 is concepts only, no cod
 | 3 | MCP — Model Context Protocol | [Read](https://pipeline2insights.substack.com/p/ai-agents-in-action-part-3-model-context-protocol-mcp-for-data-engineers) | [part-03-mcp](./part-03-mcp/) |
 | 4 | Skills | [Read](https://pipeline2insights.substack.com/p/ai-agents-in-action-part-4-agent-skills-for-data-engineers) | [part-04-skills](./part-04-skills/) |
 | 5 | Sub-Agents | [Read](https://pipeline2insights.substack.com/p/ai-agents-in-action-part-5-sub-agents-for-data-engineers) | [part-05-sub-agents](./part-05-sub-agents/) |
-| 6 | Memory | coming soon | — |
+| 6 | Memory | coming soon | [part-06-memory](./part-06-memory/) |
 | 7 | Putting It All Together | coming soon | — |
 | 8 | Production-Ready Agents | coming soon | — |
 
