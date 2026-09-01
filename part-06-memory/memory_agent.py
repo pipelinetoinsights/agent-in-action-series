@@ -51,6 +51,7 @@ def check_table(table_name: str) -> dict:
         raise ValueError(f"Unknown table: {table_name}")
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+    # table_name is restricted to ALLOWED_TABLES above, safe to interpolate
     cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
     row_count = cursor.fetchone()[0]
     conn.close()
