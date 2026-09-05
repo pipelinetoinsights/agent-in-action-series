@@ -19,9 +19,13 @@ That last row is the point worth sitting with: Part 6 named four memory types (w
 ## Setup
 
 ```bash
-pip install anthropic fastmcp
+pip install -r requirements.txt
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
+
+`requirements.txt` pins to the versions this was actually tested against
+(`fastmcp` 3.x, `anthropic` 0.x) — both projects are still pre-1.0 and can
+ship breaking changes on an unpinned install.
 
 ## Run the automated monitor
 

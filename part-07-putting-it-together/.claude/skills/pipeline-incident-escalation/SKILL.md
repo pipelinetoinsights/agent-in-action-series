@@ -26,7 +26,9 @@ worsening.
 ## Step 2: Compare against the alert
 
 - If the current count is still down more than 10% from what the monitor
-  reported as the previous baseline, treat this as **active**.
+  reported as the previous baseline, treat this as **active**. (This mirrors
+  `THRESHOLD_PCT` in `pipeline_monitor.py` — if that constant changes, update
+  this percentage too; nothing keeps them in sync automatically.)
 - If the count has recovered, treat this as **resolved** but still report it —
   a self-healing drop is still worth a paper trail.
 

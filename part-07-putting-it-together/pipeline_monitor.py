@@ -39,6 +39,10 @@ MEMORY_DB = "episodic_memory.db"
 MCP_SERVER = "mcp_server.py"
 TABLES_TO_MONITOR = ["orders", "customers", "payments"]  # swap in your own table names
 THRESHOLD_PCT = 10  # flag a row-count drop bigger than this, in percent
+# If you change this, also update the "10%" written into Step 2 of
+# .claude/skills/pipeline-incident-escalation/SKILL.md — it's prose in a
+# runbook a human follows, not read from this constant, so nothing keeps
+# the two in sync automatically.
 
 SUMMARY_ROLE = """You are a reporting worker for a data pipeline monitor.
 Given a table's classification (ANOMALY, OK, or BASELINE) and its row counts,
@@ -159,20 +163,33 @@ def run_health_check(tables: list[str]) -> None:
 
     current_stats = asyncio.run(gather_table_stats(tables))  # tool, via MCP
 
-    # sub-agents: one worker per table, fanned out in parallel
-    with ThreadPoolExecutor(max_workers=len(tables)) as pool:
-        futures = [pool.submit(check_and_report, current_stats[table], memory) for table in tables]
-        results = [future.result() for future in futures]
+    # sub-agents: one worker per table, fanned out in parallel. Capped at 20
+    # threads so this stays sane if you point TABLES_TO_MONITOR at hundreds
+    # of tables, not just these three.
+    with ThreadPoolExecutor(max_workers=min(len(tables), 20)) as pool:
+        futures = {table: pool.submit(check_and_report, current_stats[table], memory) for table in tables}
 
+    # Collect per-table, not as one batch: the isolation argument for
+    # sub-agents (Primitive 3) only holds if one worker's failure — a
+    # timeout, a rate limit, any Claude API error — can't take the other
+    # workers' results down with it. `current_stats[table]` already holds
+    # the real row count from the MCP call above, independent of whether
+    # the summary call below succeeded, so every table's reading still gets
+    # saved to memory even if its write-up didn't.
     new_memory = {}
-    for current, summary in results:
-        print(f"\n=== {current['table']} ===\n{summary}")
-        new_memory[current["table"]] = {
+    for table, future in futures.items():
+        current = current_stats[table]
+        try:
+            _, summary = future.result()
+        except Exception as exc:
+            summary = f"Could not generate a summary for `{table}` (row count {current['row_count']} recorded): {exc}"
+        print(f"\n=== {table} ===\n{summary}")
+        new_memory[table] = {
             "row_count": current["row_count"],
             "checked_at": current["checked_at"],
         }
 
-    save_memory(new_memory)  # episodic memory: appended as new rows, past readings untouched
+    save_memory(new_memory)  # episodic memory: appended as new rows, past readings untouched — for every table, even one whose summary failed
 
 
 if __name__ == "__main__":
