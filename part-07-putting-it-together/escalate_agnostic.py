@@ -83,11 +83,12 @@ def run_escalation(request: str, table_name: str) -> None:
     current = asyncio.run(check_table_via_mcp(table_name))  # Step 1 of the runbook, done for real
     baseline = load_last_baseline(table_name)  # the monitor's own memory, not a guess
 
-    task = (
-        f"{request}\n\n"
-        f"Current reading from check_table: {current}\n"
+    baseline_line = (
         f"Monitor's last recorded baseline for {table_name}: {baseline}"
+        if baseline is not None
+        else f"No prior baseline recorded for {table_name} — this is the only reading in memory so far."
     )
+    task = f"{request}\n\nCurrent reading from check_table: {current}\n{baseline_line}"
     response = client.messages.create(
         model=MODEL,
         max_tokens=512,
