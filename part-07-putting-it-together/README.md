@@ -2,6 +2,8 @@
 
 Code for [Agents in Action #7](https://pipeline2insights.substack.com) on [Pipeline to Insights](https://pipeline2insights.substack.com).
 
+![Architecture of the pipeline health monitor: a scheduled detection-and-summary run on the left, a human-driven escalation loop on the right, both sharing the MCP server and the episodic-memory log.](architecture.png)
+
 Every primitive from the series, each earning its place for a specific reason — not included just because it exists. Four files: `mcp_server.py`, `pipeline_monitor.py`, `.claude/skills/pipeline-incident-escalation/SKILL.md`, and `escalate_agnostic.py` (the same skill, no Claude Code needed).
 
 | Primitive | Where | Why this one, here |
